@@ -11,7 +11,7 @@ OLED_CLASS_OBJ display(OLED_ADDRESS, OLED_SDA, OLED_SCL);
 
 void setup()
 {
-    Serial.begin(115200);
+    Serial.begin(9600);
     while (!Serial);
 
     if (OLED_RST > 0) {
@@ -111,6 +111,7 @@ void loop()
         LoRa.print("WiFi RSSI: ");
         LoRa.print(rssi);
         LoRa.endPacket();
+        Serial.println("Data sent...");
     } else {
         Serial.println("WiFi Connect lost ...");
     }
