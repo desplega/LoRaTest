@@ -9,6 +9,16 @@ OLED_CLASS_OBJ display(OLED_ADDRESS, OLED_SDA, OLED_SCL);
 #define WIFI_SSID       "Aquaris U Plus - Marcel"
 #define WIFI_PASSWORD   "c1044697adb2"
 
+int flag = 0;
+void IRAM_ATTR ISR_ChangeLED() {
+    // LED
+    if (flag)
+        digitalWrite(LED_BUILTIN, HIGH);
+    else
+        digitalWrite(LED_BUILTIN, LOW);
+    flag = !flag;
+}
+
 void setup()
 {
     Serial.begin(9600);
@@ -93,6 +103,12 @@ void setup()
         display.drawString(display.getWidth() / 2, display.getHeight() / 2, "LoraRecv Ready");
         display.display();
     }
+
+    // LED
+    pinMode(LED_BUILTIN, OUTPUT);
+
+    // BUTTON
+    attachInterrupt(KEY_BUILTIN, ISR_ChangeLED, FALLING);
 }
 
 int count = 0;
